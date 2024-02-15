@@ -110,3 +110,50 @@ Route:: get('/shop',function(Request $request){
         return response()->json($error,200);
     }
 });
+
+
+
+Route::get('/shopfind/{id}', function ($id,Request $request){
+	try
+	{
+		//$id=$request["id"];
+		$emp = shop::find($id);
+		if($emp==null)
+		{
+			throw new Exception('Id Not Found');
+		}
+		//$emp["url"]=str_replace("\\","",$emp["url"]);
+		$emp["status"]="ok";
+
+		return response()->json($emp, 200);
+	}
+	catch(\Exception $k) {
+		$error=array("status"=>"failed","error"=>$k->getMessage());
+		return response()->json($error, 200);
+	}
+});
+
+
+
+
+Route::get('/shopwhere/{name}', function ($name,Request $request){
+	try
+	{
+		//$id=$request["id"];
+		$emp = shop::where('name',$name)->first();
+		if($emp==null)
+		{
+			throw new Exception('Id Not Found');
+		}
+		//$emp["url"]=str_replace("\\","",$emp["url"]);
+		$emp["status"]="ok";
+
+		return response()->json($emp, 200);
+	}
+	catch(\Exception $k) {
+		$error=array("status"=>"failed","error"=>$k->getMessage());
+		return response()->json($error, 200);
+	}
+});
+
+
