@@ -35,3 +35,7 @@ Route::get('/bankappc',function(){
 Route::get('/bankappu',function(){
     return view(('layouts/bankappupdate'));
 });
+
+Route::get('/bankappd',function(){
+    return view(('layouts/bankappdelete'));
+});

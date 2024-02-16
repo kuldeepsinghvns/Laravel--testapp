@@ -275,3 +275,24 @@ Route::post('/bankupdate',function( Request $request){
 		return response()->json($error,200);
 	}
 });
+
+Route::post('/bankdelete',function( Request $request){
+
+	try{
+		$id=$request["id"];
+		$bk=bankapp::find($id);
+		$bk->delete();
+		if($bk==null){
+			
+			throw new Exception("Delete Successfull");
+		}
+		
+		$bk["status"]="ok";
+		return response()->json($bk,200);
+	}
+	catch (\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getmessage());
+		
+		return response()->json($error,200);
+	}
+});
