@@ -25,6 +25,13 @@ Route::get('/pr', function () {
 });
 
 
-Route::get('/apiviews',function(){
-    return view(('api'));
+Route::get('/bankapp',function(){
+    return view(('layouts/bankapp'));
+});
+Route::get('/bankappc',function(){
+    return view(('layouts/bankfind'));
+});
+
+Route::get('/bankappu',function(){
+    return view(('layouts/bankappupdate'));
 });

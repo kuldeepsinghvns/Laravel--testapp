@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Bankdetails;
 use App\shop;
-
+use App\bankapp;
+use Mockery\Expectation;
 
 use function Laravel\Prompts\error;
 
@@ -23,112 +24,102 @@ use function Laravel\Prompts\error;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
 });
 
 
 
-Route::get('/hello', function (Request $request){
-	try
-	{
-		
+Route::get('/hello', function (Request $request) {
+	try {
+
 		$emp = [];
-        $emp["msg"]="Hello " . $request["name"];
-       
-		if($emp==null)
-		{
+		$emp["msg"] = "Hello " . $request["name"];
+
+		if ($emp == null) {
 			throw new Exception('Id Not Found');
 		}
 		//$emp["url"]=str_replace("\\","",$emp["url"]);
-		$emp["status"]="ok";
-        
+		$emp["status"] = "ok";
+
 
 		return response()->json($emp, 200);
-	}
-	catch(\Exception $k) {
-		$error=array("status"=>"failed","error"=>$k->getMessage());
+	} catch (\Exception $k) {
+		$error = array("status" => "failed", "error" => $k->getMessage());
 		return response()->json($error, 200);
 	}
 });
 
 
 
-Route::get('/marks',function (Request $request){
-    try
-    {
-        $num=[];
-        $num ["subject"]="physics";
-        $num ["marks"]= $request["marks"];
+Route::get('/marks', function (Request $request) {
+	try {
+		$num = [];
+		$num["subject"] = "physics";
+		$num["marks"] = $request["marks"];
 
-        if ($num["marks"] >= 40) {
-            $num["result"] = "pass";
-        } else {
-            $num["result"] = "fail";
-        }
+		if ($num["marks"] >= 40) {
+			$num["result"] = "pass";
+		} else {
+			$num["result"] = "fail";
+		}
 
 
-        if($num==null){
-            throw new Exception("Not Found");
-        }
-        return response()->json($num,200);
-    }
-    catch(\Exception $ex){
-        $error=array("status"=>"failed","error"=>$ex->getMessage());
-        return response()->json($error,200);
-    }
+		if ($num == null) {
+			throw new Exception("Not Found");
+		}
+		return response()->json($num, 200);
+	} catch (\Exception $ex) {
+		$error = array("status" => "failed", "error" => $ex->getMessage());
+		return response()->json($error, 200);
+	}
 });
 
 
 
 
-Route::get('/bankdetails', function(Request $request){
-	try{
-		
+Route::get('/bankdetails', function (Request $request) {
+	try {
+
 		$pi = Bankdetails::create($request->all());
 		$pi->save();
-		$pi["status"]="ok";
-		
-		
+		$pi["status"] = "ok";
+
+
 		return response()->json($pi, 200);
-	}
-	catch(\Exception $f){
-		$error=array("status"=>"failed","error"=>$f->getMessage());
+	} catch (\Exception $f) {
+		$error = array("status" => "failed", "error" => $f->getMessage());
 		return response()->json($error, 200);
 	}
 });
 
 
-Route:: get('/shop',function(Request $request){
-    try{
-        $si = shop::create($request->all());
-        $si -> save();
-        $si["status"]="ok";
-        return response()->json($si,200);
-    }
-    catch(\Exception $ex){
-        $error=array("status"=>"failed","error"=>$ex->getMessage());
-        return response()->json($error,200);
-    }
+Route::get('/shop', function (Request $request) {
+	try {
+		$si = shop::create($request->all());
+		$si->save();
+		$si["status"] = "ok";
+		return response()->json($si, 200);
+	} catch (\Exception $ex) {
+		$error = array("status" => "failed", "error" => $ex->getMessage());
+		return response()->json($error, 200);
+	}
 });
 
 
 
-Route::get('/shopfind/{id}', function ($id,Request $request){
-	try
-	{
+Route::get('/shopfind/{id}', function ($id, Request $request) {
+	try {
 		//$id=$request["id"];
 		$emp = shop::find($id);
-		if($emp==null)
-		{
+		if ($emp == null) {
 			throw new Exception('Id Not Found');
 		}
 		//$emp["url"]=str_replace("\\","",$emp["url"]);
-		$emp["status"]="ok";
+		$emp["status"] = "ok";
 
 		return response()->json($emp, 200);
-	}
-	catch(\Exception $k) {
-		$error=array("status"=>"failed","error"=>$k->getMessage());
+	} catch (\Exception $k) {
+		$error = array("status" => "failed", "error" => $k->getMessage());
 		return response()->json($error, 200);
 	}
 });
@@ -136,24 +127,151 @@ Route::get('/shopfind/{id}', function ($id,Request $request){
 
 
 
-Route::get('/shopwhere/{name}', function ($name,Request $request){
-	try
-	{
+Route::get('/shopwhere/{name}', function ($name, Request $request) {
+	try {
 		//$id=$request["id"];
-		$emp = shop::where('name',$name)->first();
-		if($emp==null)
-		{
+		$emp = shop::where('name', $name)->first();
+		if ($emp == null) {
 			throw new Exception('Id Not Found');
 		}
 		//$emp["url"]=str_replace("\\","",$emp["url"]);
-		$emp["status"]="ok";
+		$emp["status"] = "ok";
 
 		return response()->json($emp, 200);
-	}
-	catch(\Exception $k) {
-		$error=array("status"=>"failed","error"=>$k->getMessage());
+	} catch (\Exception $k) {
+		$error = array("status" => "failed", "error" => $k->getMessage());
 		return response()->json($error, 200);
 	}
 });
 
 
+
+// Route::get('/bank', function (Request $request) {
+// 	try {
+// 		$bk = bankapp::create($request->all());
+// 		$bk->save();
+// 		$bk['status'] = "ok";
+// 		return response()->json($bk, 200);
+// 	} catch (\Exception $ex) {
+// 		$error = array("status" => "failed", "error" => $ex->getMessage());
+// 		return response()->json($error, 200);
+// 	}
+// });
+
+
+
+Route::get('/bankfind/{id}',function($id, Request $request){
+
+	try{
+		$bk=bankapp::find($id);
+		if($bk==null){
+			throw new Exception("number not found");
+		}
+		$bk["status"]="ok";
+		return response()->json($bk,200);
+	}
+	catch (\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getmessage());
+		return response()->json($error,200);
+	}
+});
+
+Route::post('/bankdelete/{name}',function($name, Request $request){
+
+	try{
+		$bk=bankapp::find($name);
+
+		if($bk==null){
+			
+			throw new Exception("Delete Successfull");
+		}
+		$bk->delete();
+		$bk["status"]="ok";
+		return response()->json($bk,200);
+	}
+	catch (\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getmessage());
+		
+		return response()->json($error,200);
+	}
+});
+
+
+Route::get('/bankupdate/{id}',function($id, Request $request){
+
+	try{
+		$bk=bankapp::find($id);
+		$bk->update($request->all());
+		$bk->save();
+		if($bk==null){
+			throw new Exception("Id not found");
+		}
+		$bk["status"]="ok";
+		return response()->json($bk,200);
+	}
+	catch (\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getmessage());
+		return response()->json($error,200);
+	}
+});
+
+
+
+Route::post('/bankpost',function(Request $request){
+
+
+	try{
+		$bk=bankapp::create($request->all());
+		$bk->save();
+		$bk['status']="ok";
+		return response()->json($bk, 200);
+	}
+	catch(\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getMessage());
+		return response()->json($error,200);
+
+	}
+});
+
+Route::post('/bankwhere',function( Request $request){
+
+	try{
+		$name=$request["name"];
+		// $bk=[];
+		// $bk["name"]=$name;
+		$bk=bankapp::where('name',$name)->first();
+		if($bk==null){
+			throw new Exception("name not found");
+		}
+		$bk["status"]="ok";
+		return response()->json($bk,200);
+	}
+	catch (\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getmessage());
+		return response()->json($error,200);
+	}
+});
+
+
+Route::post('/bankupdate',function( Request $request){
+
+	try{
+		$id=$request["id"];
+		$bk=bankapp::find($id);
+		// $bk["name"]="Aakash TakTakpur";
+		$bk["name"]=$request["name"];
+		$bk["banknumber"]=$request["banknumber"];
+		$bk["balance"]=$request["balance"];
+		// $bk->update($request->all());
+		$bk->save();
+		if($bk==null){
+			throw new Exception("Id not found");
+		}
+		$bk["status"]="ok";
+		return response()->json($bk,200);
+	}
+	catch (\Exception $ex){
+		$error=array("status"=>"failed","error"=>$ex->getmessage());
+		return response()->json($error,200);
+	}
+});
