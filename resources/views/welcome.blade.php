@@ -130,7 +130,7 @@
         [type=reset],
         [type=submit],
         button {
-            -webkit-appearance: button;
+         -webkit-appearance:button;
             background-color: transparent;
             background-image: none
         }

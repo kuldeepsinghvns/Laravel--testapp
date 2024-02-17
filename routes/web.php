@@ -49,3 +49,12 @@ Route:: get('/bank',function(){
     
     return view('layouts/bank');
 });
+
+Route::post('/search',function(){
+    return view('layouts/search');
+});
+
+Route:: get('/search',function(){
+    
+    return view('layouts/search');
+});

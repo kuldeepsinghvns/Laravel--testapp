@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
 
-    <title>Document</title>
+    <title>Find</title>
 </head>
 
 <?php
-
+use Illuminate\Support\Facades\DB;
 use App\bankapp;
 
 
@@ -24,23 +24,19 @@ if (!isset($_POST['check'])) {
 }
 
 if ($status == "ok") {
-    $name = $_POST['name'];
     $banknumber = $_POST['banknumber'];
-    $balance = $_POST['balance'];
-
-
-    $bankapp = new bankapp();
-    $bankapp->name = $name;
-    $bankapp->banknumber = $banknumber;
-    $bankapp->balance = $balance;
-    if ($status == "ok") {
-        $bankapp->save();
-        echo "Save";
-    } else {
-        echo "error";
-    }
+    
+    $bankapp = DB::table('bankapp')->where([
+        ['banknumber', '=', $banknumber],
+       
+    ])->first();
+if($bankapp){
+    echo "Record is name: {$bankapp->name}, Banknumber : {$bankapp->banknumber}, Balance:{$bankapp->balance}";
 }
-
+else{
+     echo"Data Not found";
+}
+}
 
 ?>
 
@@ -52,12 +48,10 @@ if ($status == "ok") {
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="check" value="0">
-                    <label>Name</label>
-                    <input type="text" name="name"><br>
+                   
                     <label>BankNumber</label>
-                    <input type="text" name="banknumber"><br>
-                    <label>Balance</label>
-                    <input type="text" name="balance"><br>
+                    <input type="text" name="banknumber">
+                    
                     <input type="submit" name="submit">
 
                 </form>
