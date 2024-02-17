@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-//import class
+//import 
 
 use App\Bankdetails;
 use App\shop;

@@ -1,6 +1,7 @@
 <?php
-
+namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,13 @@ Route::get('/bankappu',function(){
 
 Route::get('/bankappd',function(){
     return view(('layouts/bankappdelete'));
+});
+
+Route::post('/bank',function(){
+    return view('layouts/bank');
+});
+
+Route:: get('/bank',function(){
+    
+    return view('layouts/bank');
 });
