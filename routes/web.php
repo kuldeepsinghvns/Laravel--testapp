@@ -58,3 +58,34 @@ Route:: get('/search',function(){
     
     return view('layouts/search');
 });
+
+
+Route::post('/update',function(){
+    return view('layouts/update');
+});
+
+Route:: get('/update',function(){
+    
+    return view('layouts/update');
+});
+
+
+
+Route::post('/delete',function(){
+    return view('layouts/delete');
+});
+
+Route:: get('/delete',function(){
+    
+    return view('layouts/delete');
+});
+
+
+// Login urls
+
+Route :: post('/login',function(){
+    return view('layouts/login');
+});
+Route :: get('/login',function(){
+    return view('layouts/login');
+});
