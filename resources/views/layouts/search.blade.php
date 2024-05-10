@@ -10,6 +10,7 @@
 </head>
 
 <?php
+
 use Illuminate\Support\Facades\DB;
 use App\bankapp;
 
@@ -25,17 +26,16 @@ if (!isset($_POST['check'])) {
 
 if ($status == "ok") {
     $banknumber = $_POST['banknumber'];
-    
+
     $bankapp = DB::table('bankapp')->where([
         ['banknumber', '=', $banknumber],
-       
+
     ])->first();
-if($bankapp){
-    echo "Record is name: {$bankapp->name}, Banknumber : {$bankapp->banknumber}, Balance:{$bankapp->balance}";
-}
-else{
-     echo"Data Not found";
-}
+    if ($bankapp) {
+        echo "Record is name: {$bankapp->name}, Banknumber : {$bankapp->banknumber}, Balance:{$bankapp->balance}";
+    } else {
+        echo "Data Not found";
+    }
 }
 
 ?>
@@ -48,10 +48,10 @@ else{
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="check" value="0">
-                   
+
                     <label>BankNumber</label>
                     <input type="text" name="banknumber">
-                    
+
                     <input type="submit" name="submit">
 
                 </form>
